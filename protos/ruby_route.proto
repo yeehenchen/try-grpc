@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.rubyroute";
+option java_outer_classname = "RubyRouteProto";
+option objc_class_prefix = "RTG";
+
+package rubyroute;
+
+// Interface exported by the server.
+service RubyRoute {
+  rpc getPerson(PersonRequest) returns (PersonResponse) {}
+}
+
+message PersonRequest {
+  string name = 1;
+}
+
+message PersonResponse {
+  string email = 1;
+}
