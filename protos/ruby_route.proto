@@ -10,6 +10,7 @@ package rubyroute;
 // Interface exported by the server.
 service RubyRoute {
   rpc getPerson(PersonRequest) returns (PersonResponse) {}
+  rpc getPeople(stream PersonRequest) returns (stream PersonResponse) {}
 }
 
 message PersonRequest {

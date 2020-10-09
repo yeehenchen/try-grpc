@@ -18,6 +18,29 @@ class ServerImpl < RubyRoute::Service
     record = @feature_db.find{|db| db["name"] == request.name} || {"email" => ''}
     PersonResponse.new(email: record["email"])
   end
+
+  def get_people(requests, _call)
+    PeopleEnumerator.new(requests, @feature_db).each_person
+  end
+end
+
+class PeopleEnumerator
+  def initialize(requests, db)
+    @requests = requests
+    @db = db
+  end
+
+  def each_person
+    return enum_for(:each_person) unless block_given?
+    begin
+      @requests.each do |r|
+        record = @db.find{|db| db["name"] == r.name} || {"email" => ''}
+        yield PersonResponse.new(email: record["email"])
+      end
+    rescue StopIteration => e
+      fail e
+    end
+  end
 end
 
 def main

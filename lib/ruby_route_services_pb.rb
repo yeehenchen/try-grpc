@@ -16,6 +16,7 @@ module Rubyroute
       self.service_name = 'rubyroute.RubyRoute'
 
       rpc :getPerson, ::Rubyroute::PersonRequest, ::Rubyroute::PersonResponse
+      rpc :getPeople, stream(::Rubyroute::PersonRequest), stream(::Rubyroute::PersonResponse)
     end
 
     Stub = Service.rpc_stub_class
